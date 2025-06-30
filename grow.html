@@ -17,6 +17,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* Heart Link Styles */
+.heart-link {
+  font-size: 60px;
+  color: #cb748e;
+  border: black;
+  text-decoration: none;
+  display: inline-block;
+  position:absolute;
+  bottom: 0;
+  right: 2%;
+  animation: pulse 1.7s infinite;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.heart-link:hover {
+  transform: scale(1.3);
+  color: #893941;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+</style>
 </head>
 <body>
   <div class="container">
@@ -42,6 +69,7 @@
       <div class="final-message">Have a good day!</div>
     </div>
   </div>
+  <a href="ppt1.html" class="heart-link">❤︎</a>
 
   <!-- Link to your JavaScript - don't change unless you rename index.js -->
   <script src="grow.js"></script>
