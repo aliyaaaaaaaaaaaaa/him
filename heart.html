@@ -1,36 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Heart Graph 💘</title>
+  <title>heart graph</title>
   <style>
     body {
       margin: 0;
-      background-color: #ffffff;
-      background-image:
-        linear-gradient(to right, #e0e0e0 1px, transparent 1px),
-        linear-gradient(to bottom, #e0e0e0 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-color: #161e2f;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
 
     canvas {
       background-color: transparent;
       border-radius: 15px;
+      z-index: 0;
+    }
+
+    /* Heart button */
+    .heart-link {
+      font-size: 60px;
+      color: #ff5e7d;
+      text-decoration: none;
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      animation: pulse 1.7s infinite;
+      transition: transform 0.3s, color 0.3s;
+      z-index: 2;
+    }
+
+    .heart-link:hover {
+      transform: scale(1.3);
+      color: #426e55;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* 💬 Doodle text styles */
+    .doodle {
+      position: absolute;
+      color: #ffc0cb;
+      font-size: 1.5rem;
+      font-family: 'Comic Sans MS', cursive;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      z-index: 1;
+    }
+
+    .top-left    { top: 12%; left: 6%; }
+    .top-right   { top: 10%; right: 5%; }
+    .bottom-left { bottom: 15%; left: 5%; }
+    .bottom-right{ bottom: 15%; right: 5%; }
+
+    .show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
   <canvas id="heartCanvas" width="500" height="500"></canvas>
 
+  <!-- 💬 Doodle Notes -->
+  <div class="doodle top-left">the first conversation we had <br> i really really liked you <br> your
+  pfp, the way<br> you talked. the username</div>
+  
+  <div class="doodle top-right">You make me so happyyy <br> i want to talk to you all the time <br> i 
+  love talking to you <br> i love the way you talk <br>and EVERY SINGLE THING about you</div>
+  <div class="doodle bottom-left">Youre the best thing that has <br> ever happened to my life <br>
+  you make me so upset sometimes but <br> mwah its okay</div>
+  <div class="doodle bottom-right">I can never stop liking you and i love you <br>
+    SOSOOSOO MUCH mwah mwah mwah <br> i really wish i get into a college next <br> year and we meet and hang out and study  </div>
+
+  <a href="pblyrics.html" class="heart-link">❤︎</a>
+
   <script>
     const canvas = document.getElementById("heartCanvas");
     const ctx = canvas.getContext("2d");
 
-    // Draw grid lines inside canvas
-    function drawGrid(spacing = 20, color = "#e0e0e0") {
+    // Draw grid
+    function drawGrid(spacing = 20, color = "#1d2538") {
       ctx.strokeStyle = color;
       ctx.lineWidth = 1;
 
@@ -49,12 +104,12 @@
       }
     }
 
-    drawGrid(); // draw graph-paper grid
+    drawGrid();
 
-    // Move origin to center of canvas
+    // Center origin
     ctx.translate(canvas.width / 2, canvas.height / 2);
 
-    // Draw X and Y axes
+    // Draw axes
     function drawAxes() {
       ctx.strokeStyle = "#888";
       ctx.lineWidth = 1.5;
@@ -74,26 +129,24 @@
 
     drawAxes();
 
-    // Heart drawing animation
+    // Draw heart
     let t = 0;
     const scale = 10;
-
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.strokeStyle = "#ff5e7d";
     ctx.lineWidth = 2;
 
     function drawHeartStep() {
-      if (t > Math.PI * 2) return;
+      if (t > Math.PI * 2) {
+        showDoodles(); // 👉 Show text when heart is complete
+        return;
+      }
 
       const x = 16 * Math.pow(Math.sin(t), 3);
-      const y =
-        13 * Math.cos(t) -
-        5 * Math.cos(2 * t) -
-        2 * Math.cos(3 * t) -
-        Math.cos(4 * t);
+      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
 
-      ctx.lineTo(x * scale, -y * scale); // flip Y axis
+      ctx.lineTo(x * scale, -y * scale);
       ctx.stroke();
 
       t += 0.02;
@@ -101,6 +154,17 @@
     }
 
     drawHeartStep();
+
+    // 💬 Show doodle notes after heart is drawn
+    function showDoodles() {
+      const doodles = document.querySelectorAll('.doodle');
+      doodles.forEach((doodle, index) => {
+        setTimeout(() => {
+          doodle.classList.add('show');
+        }, index * 500); // staggered fade-in
+      });
+    }
   </script>
 </body>
 </html>
+
